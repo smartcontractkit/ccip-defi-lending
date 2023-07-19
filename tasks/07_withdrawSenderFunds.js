@@ -30,7 +30,6 @@ task("withdraw-sender-funds", "withdraw ETH and LINK from Sender.sol")
       gasLimit: 500_000,
     })
     await withdrawLinkTx.wait(2)
-    
 
     // Fetch updated balances to confirm.
     const bnmTokenContract = await ethers.getContractAt(

@@ -24,14 +24,14 @@ task("borrow", "borrows mock USDC against the deposit")
     const mockUsdcToken = await mockUsdcFactory.attach(usdcTokenAddress)
 
     const borrowerBalance = await protocolContract.borrowings(depositorEOA, usdcTokenAddress)
-    
+
     const borrowTx = await protocolContract.borrowUSDC(taskArgs.messageId)
     await borrowTx.wait()
     console.log(`Borrow Tx: ${borrowTx.hash}`)
-    
+
     const borrowings = await protocolContract.borrowings(depositorEOA, usdcTokenAddress)
     const borrowerTokenBal = await mockUsdcToken.balanceOf(borrower.address)
-    
+
     const totalSupply = await mockUsdcToken.totalSupply()
     console.log(`
     Borrowing recorded on Protocol: '${borrowings}'.  

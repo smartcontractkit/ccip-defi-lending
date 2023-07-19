@@ -4,7 +4,7 @@ task("setup-protocol", "deploy Protocol.sol").setAction(async (taskArgs, hre) =>
   if (network.name === "hardhat") {
     throw Error("This command cannot be used on a local development chain.  Specify a valid network.")
   }
-  
+
   const bnmToken = networks[network.name].bnmToken
   if (!bnmToken) {
     throw Error("Missing BNM Token Address")
@@ -38,7 +38,6 @@ task("setup-protocol", "deploy Protocol.sol").setAction(async (taskArgs, hre) =>
   const juelsBalance = await linkTokenContract.balanceOf(protocolContract.address)
   const linkBalance = ethers.utils.formatEther(juelsBalance.toString())
   console.log(`\nFunded ${protocolContract.address} with ${linkBalance} LINK`)
-
 
   // Get the MockUSDC Contract address.
   const usdcToken = await protocolContract.usdcToken()

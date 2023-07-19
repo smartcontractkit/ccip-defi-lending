@@ -8,6 +8,9 @@ task("balance-of", "gets the balance of a ERC20 token holder")
       )
     }
 
-    const tokenContract = await ethers.getContractAt("@chainlink/contracts/src/v0.4/interfaces/ERC20.sol:ERC20", taskArgs.token)
+    const tokenContract = await ethers.getContractAt(
+      "@chainlink/contracts/src/v0.4/interfaces/ERC20.sol:ERC20",
+      taskArgs.token
+    )
     console.log(`Balance of EOA '${taskArgs.account}':  ${await tokenContract.balanceOf(taskArgs.account)}`)
   })

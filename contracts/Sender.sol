@@ -9,7 +9,6 @@ import {LinkTokenInterface} from "@chainlink/contracts/src/v0.8/interfaces/LinkT
 
 import {IERC20} from "@chainlink/contracts-ccip/src/v0.8/vendor/openzeppelin-solidity/v4.8.0/token/ERC20/IERC20.sol";
 
-
 /**
  * THIS IS AN EXAMPLE CONTRACT AND IS NOT SECURITY AUDITED.
  * THIS IS AN EXAMPLE CONTRACT THAT USES UN-AUDITED CODE.
@@ -98,10 +97,10 @@ contract Sender is CCIPReceiver, OwnerIsCreator {
     IRouterClient router = IRouterClient(this.getRouter());
 
     // Get the fee required to send the message. Fee paid in LINK.
-    uint256 fees = router.getFee(destinationChainSelector, evm2AnyMessage); 
+    uint256 fees = router.getFee(destinationChainSelector, evm2AnyMessage);
 
     // Approve the Router to pay fees in LINK tokens on contract's behalf.
-    linkToken.approve(address(router), fees); 
+    linkToken.approve(address(router), fees);
 
     // Approve the Router to trnasfer the tokens on contract's behalf.
     IERC20(tokenToTransfer).approve(address(router), transferAmount);

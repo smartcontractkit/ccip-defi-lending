@@ -26,11 +26,14 @@ A CCIP receiver can be either:
 
 # Use Case Description
 
-We deploy a "Sender" Contract on Fuji (source chain). We also deploy a "Protocol" contract on Sepolia (destination chain).
+Our use case works off of two three smart contracts 
+- a "Sender" Contract on Fuji (source chain)
+- a "Protocol" contract on Sepolia (destination chain) and
+- a Mock StableCoin contract (controlled by the Protocol)
 
-Using[Chainlink CCIP](https://docs.chain.link/ccip) a DEFI user deposits a token in Sender, and transfers that token, along with some message data, to Protocol, where the deposit is recorded. The Protocol contract that accepts the deposit, and allows the depositor (the same EOA as on the source chain) to mint and borrow a mock stablecoin. The token transferred from the source chain is used as collateral for this borrowing on the destination chain.
+A DEFI user deposits a token in Sender, and  then, using [Chainlink CCIP](https://docs.chain.link/ccip), transfers that token, along with some message data, to Protocol. The Protocol contract that accepts the deposit. Using that transferred token  as collateral, the user (i.e. depositor/borrower - the same EOA as on the source chain)  initiates a borrow operation which mints units of the mock stablecoin to lend to the depositor/borrower . 
 
-Chainlink CCIP fees are paid using LINK tokens.
+Chainlink CCIP fees are paid using LINK tokens. They can also be paid in the [chain's native token](https://documentation-private-git-ccip-documentation-chainlinklabs.vercel.app/ccip/architecture#ccip-billing) but in this example we pay CCIP fees in LINK.
 
 The borrowed amount is calculated using a [collateralization factor (Loan to Value Ratio)](https://crypto.ro/en/dictionary/collateral-factor/#:~:text=Collateral%20Factor%20or%20Loan%20to,well%20as%20traditional%20financial%20institutions)
 

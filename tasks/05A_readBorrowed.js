@@ -6,6 +6,9 @@ task("read-borrowed", "reads the borrowing balance for the borrower")
     if (network.name === "hardhat") {
       throw Error("This command cannot be used on a local development chain.  Specify a valid network.")
     }
+    if (network.name !== "sepolia") {
+      throw Error("This task must be used on Sepolia.")
+    }
 
     const [deployer] = await ethers.getSigners()
 

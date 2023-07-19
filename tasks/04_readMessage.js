@@ -3,8 +3,8 @@ task("read-message", "reads CCIP message on dest contract")
   .addParam("contract", "Name of the CCIP contract to read")
   .addParam("messageId", "messageId to retrieve from the contract")
   .setAction(async (taskArgs, hre) => {
-    if (network.name === "hardhat") {
-      throw Error("This command cannot be used on a local development chain.  Specify a valid network.")
+    if (network.name != "fuji" && network.name != "sepolia") {
+      throw Error("This command is intended to be used with either Fuji or Sepolia.")
     }
 
     let { address, contract, messageId } = taskArgs

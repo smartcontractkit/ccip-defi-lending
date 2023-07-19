@@ -102,7 +102,7 @@ contract Sender is CCIPReceiver, OwnerIsCreator {
     // Approve the Router to pay fees in LINK tokens on contract's behalf.
     linkToken.approve(address(router), fees);
 
-    // Approve the Router to trnasfer the tokens on contract's behalf.
+    // Approve the Router to transfer the tokens on contract's behalf.
     IERC20(tokenToTransfer).approve(address(router), transferAmount);
 
     // Send the message through the router and store the returned message ID

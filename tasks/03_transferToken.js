@@ -10,6 +10,10 @@ task("transfer-token", "transfers token x-chain from Sender.sol to Protocol.sol"
       throw Error("This command cannot be used on a local development chain.  Specify a valid network.")
     }
 
+    if (network.name !== "fuji") {
+      throw Error("This task is intended to be executed on the Fuji network.")
+    }
+
     let bnmTokenAddress = networks[network.name].bnmToken
     if (!bnmTokenAddress) {
       throw Error("Missing BnM Token Address from networks.js file")

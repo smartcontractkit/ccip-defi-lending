@@ -6,6 +6,9 @@ task("withdraw-protocol-funds", "withdraw ETH and LINK from Protocol.sol")
     if (network.name === "hardhat") {
       throw Error('This command cannot be used on a local development chain.  Specify a valid network ".')
     }
+    if (network.name !== "sepolia") {
+      throw Error("This task must be used on Sepolia.")
+    }
 
     const bnmToken = networks[network.name].bnmToken
     if (!bnmToken) {

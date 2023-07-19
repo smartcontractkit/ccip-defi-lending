@@ -1,10 +1,8 @@
 task("get-token-supply", "Proves that MockUSDC has been deployed on testnet")
   .addParam("protocolAddress", "Contract address for the protocol token")
   .setAction(async (taskArgs, hre) => {
-    if (network.name === "hardhat") {
-      throw Error(
-        'This command cannot be used on a local development chain.  Specify a valid network or simulate an Functions request locally with "npx hardhat functions-simulate".'
-      )
+    if (network.name != "fuji" && network.name != "sepolia") {
+      throw Error("This command is intended to be used with either Fuji or Sepolia.")
     }
 
     const protocolContractFactory = await ethers.getContractFactory("DefiProtocol")

@@ -5,6 +5,10 @@ task("setup-protocol", "deploy Protocol.sol").setAction(async (taskArgs, hre) =>
     throw Error("This command cannot be used on a local development chain.  Specify a valid network.")
   }
 
+  if (network.name !== "sepolia") {
+    throw Error("This task is intended to be executed on the Sepolia network.")
+  }
+  
   const bnmToken = networks[network.name].bnmToken
   if (!bnmToken) {
     throw Error("Missing BNM Token Address")

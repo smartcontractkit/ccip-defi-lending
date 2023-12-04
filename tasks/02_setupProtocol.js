@@ -32,8 +32,7 @@ task("setup-protocol", "deploy Protocol.sol").setAction(async (taskArgs, hre) =>
 
   // Fund with LINK
   console.log(`\nFunding ${protocolContract.address} with ${LINK_AMOUNT} LINK `)
-  const LinkTokenFactory = await ethers.getContractFactory("LinkToken")
-  const linkTokenContract = await LinkTokenFactory.attach(networks[network.name].linkToken)
+  const linkTokenContract = await ethers.getContractAt("LinkTokenInterface", networks[network.name].linkToken)
 
   // Transfer LINK tokens to the contract
   const linkTx = await linkTokenContract.transfer(protocolContract.address, ethers.utils.parseEther(LINK_AMOUNT))

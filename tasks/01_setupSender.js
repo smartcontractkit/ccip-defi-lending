@@ -32,7 +32,7 @@ task("setup-sender", "deploy Sender.sol").setAction(async (taskArgs, hre) => {
   // Fund with CCIP BnM Token
   console.log(`\nFunding ${senderContract.address} with ${TOKEN_TRANSFER_AMOUNT} CCIP-BnM `)
   const bnmTokenContract = await ethers.getContractAt(
-    "@chainlink/contracts/src/v0.4/interfaces/ERC20.sol:ERC20",
+    "ERC20",
     bnmToken
   )
 
@@ -48,8 +48,7 @@ task("setup-sender", "deploy Sender.sol").setAction(async (taskArgs, hre) => {
 
   // Fund with LINK
   console.log(`\nFunding ${senderContract.address} with ${LINK_AMOUNT} LINK `)
-  const LinkTokenFactory = await ethers.getContractFactory("LinkToken")
-  const linkTokenContract = await LinkTokenFactory.attach(networks[network.name].linkToken)
+  const linkTokenContract = await ethers.getContractAt("LinkTokenInterface", networks[network.name].linkToken)
 
   const linkTx = await linkTokenContract.transfer(senderContract.address, ethers.utils.parseUnits(LINK_AMOUNT))
   await linkTx.wait(1)

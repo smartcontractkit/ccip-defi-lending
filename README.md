@@ -118,17 +118,17 @@ Make a note of this contract address.
 
 Note also, that in our example `Protocol.sol` also creates and controls the MockUSDC ERC20 contract on Sepolia. This was done for design/convenience to reduce the number of steps in this example. The key point is that the Protocol controls the interaction with the MockUSDC stablecoin contract - specifically the minting and burning of MockUSDC.
 
-3. Send tokens and data from Fuji to Sepoli (From `Sender.sol` to `Protocol.sol`). We send only 100 "wei" units - i.e. 0.0000000000000001 CCIP-BnM tokens.
+3. Send tokens and data from Fuji to Sepolia (From `Sender.sol` to `Protocol.sol`). We send only 100 "wei" units - i.e. 0.0000000000000001 CCIP-BnM tokens.
 
-Note that this step requires the chain selector for the destination chain. Find them [here](https://docs.chain.link/ccip/supported-networks#ethereum-sepolia--polygon-mumbai-lane).
+Note that this step utilizes the chain selector for the destination chain as set out in the `networks.js`` file. Check for the latest chain selectors [here](https://docs.chain.link/ccip/supported-networks#ethereum-sepolia--polygon-mumbai-lane).
 
 ```
-npx hardhat transfer-token
---network fuji
---amount 100                                            // 100 units of BnM
---sender <<Sender Contract Address on Fuji>>
---protocol << Protocol Contract Address on Sepolia >>
---dest-chain-selector 16015286601757825753 // Sepolia destination chain selector
+npx hardhat transfer-token \
+--network fuji \
+--amount 100 \                                      // 100 units of BnM
+--sender <<Sender Contract Address on Fuji>> \
+--protocol << Protocol Contract Address on Sepolia >> \
+--dest-chain sepolia
 ```
 
 Make a note of the Source Tx Hash that get's printed to your console. You will need this. You can also open the CCIP Explorer URL that gets printed to your console.
@@ -168,12 +168,12 @@ If you want to specifically check the BnM-CCIP token contract on Sep
 
 5. Initiate the borrow/swap of the deposited token for the Mock USDC token.
 
-`npx hardhat borrow --network sepolia --protocol <<Protocol Contract on Fuji  --message-id << message ID from the CCIP explorer/previous step output >>`
+`npx hardhat borrow --network sepolia --protocol <<Protocol Contract on Fuji>>  --message-id << message ID from the CCIP explorer/previous step output >>`
 
 This will cause the Protocol contract to apply the Collateral Factor (70%) and then use Chainlink Price Feeds to calculate the swap rate for 70% of the deposited token. This gives us the amount of MockUSDC that can be borrowed, while keeping sufficient collateral to secure against fluctuations in value of the deposited token.
 
 6. Check that your borrowing is recorded on the Protocol contract
-   npx hardhat read-borrowed --protocol 0xac2100FFc4854296427A60e3C632F839Cc17Be3a --network sepolia
+   `npx hardhat read-borrowed --protocol <<Protocol Contract on Fuji>> --network sepolia`
 
 This will print details about the borrower (your wallet address), the amount of the deposit (100 juels/wei in this example) and the amount of your borrowing (calculated after applying the Collateral Factor and getting the exchange rate from Chainlink Price Feeds)
 ![read borrowing result in console](/img/read-borrowing.png)

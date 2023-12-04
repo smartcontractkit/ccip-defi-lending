@@ -37,12 +37,11 @@ task("withdraw-sender-funds", "withdraw ETH and LINK from Sender.sol")
 
     // Fetch updated balances to confirm.
     const bnmTokenContract = await ethers.getContractAt(
-      "@chainlink/contracts/src/v0.4/interfaces/ERC20.sol:ERC20",
+      "ERC20",
       bnmToken
     )
 
-    const LinkTokenFactory = await ethers.getContractFactory("LinkToken")
-    const linkTokenContract = await LinkTokenFactory.attach(networks[network.name].linkToken)
+    const linkTokenContract = await ethers.getContractAt("LinkTokenInterface", networks[network.name].linkToken)
 
     console.log(`
     Sender Contract's Link Token Balance  : ${await linkTokenContract.balanceOf(taskArgs.address)}
